@@ -2,6 +2,8 @@
 
 const fs = require("node:fs/promises");
 const readline = require("node:readline");
+const argv = require("minimist")(process.argv.slice(2));
+const filePath = "./memos.json";
 
 async function exists(filePath) {
   try {
@@ -12,9 +14,8 @@ async function exists(filePath) {
   }
 }
 
-async function fileWriter() {
+async function fileWriter(lines) {
   try {
-    const filePath = "./memos.json";
     if (!(await exists(filePath))) {
       await fs.writeFile(filePath, '[]');
     }
@@ -28,16 +29,36 @@ async function fileWriter() {
   }
 }
 
-process.stdin.setEncoding("utf8");
-const lines = [];
-const rl = readline.createInterface({
-  input: process.stdin,
-});
+function addMemo() {
+  process.stdin.setEncoding("utf8");
+  const lines = [];
+  const rl = readline.createInterface({
+    input: process.stdin,
+  });
+  
+  rl.on("line", (line) => {
+    lines.push(line);
+  });
+  
+  rl.on("close", () => {
+    fileWriter(lines);
+  });
+}
 
-rl.on("line", (line) => {
-  lines.push(line);
-});
+async function listMemos() {
+  try {
+    const file = await fs.readFile(filePath, { encoding: "utf8" });
+    const memos = JSON.parse(file);
+    for (const memo of memos) {
+      console.log(memo[0]);
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
 
-rl.on("close", () => {
-  fileWriter();
-});
+if (argv.l) {
+  listMemos();
+} else {
+  addMemo();
+}
