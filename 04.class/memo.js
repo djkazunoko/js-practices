@@ -53,8 +53,8 @@ async function listMemos() {
   try {
     const file = await fs.readFile(filePath, { encoding: "utf8" });
     const memos = JSON.parse(file);
-    for (const memo of memos) {
-      console.log(memo[0]);
+    for (const id in memos) {
+      console.log(memos[id][0]);
     }
   } catch (err) {
     console.log(err);
