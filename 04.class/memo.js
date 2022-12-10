@@ -93,10 +93,44 @@ async function selectMemos() {
   }
 }
 
+async function deleteMemo() {
+  const { prompt } = require("enquirer");
+
+  try {
+    const file = await fs.readFile(filePath, { encoding: "utf8" });
+    const memos = JSON.parse(file);
+
+    const question = {
+      type: "select",
+      name: "memoId",
+      message: "Choose a note you want to delete:",
+      choices: [],
+      result() {
+        return this.focused.value;
+      },
+    };
+
+    for (const id in memos) {
+      const obj = { name: memos[id][0], message: memos[id][0], value: id };
+      question.choices.push(obj);
+    }
+    let answer = await prompt(question);
+    const id = answer.memoId;
+    delete memos[id];
+    const data = JSON.stringify(memos);
+    await fs.writeFile(filePath, data);
+    console.log("Successfully deleted !!");
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 if (argv.l) {
   listMemos();
 } else if (argv.r) {
   selectMemos();
+} else if (argv.d) {
+  deleteMemo();
 } else {
   addMemo();
 }
