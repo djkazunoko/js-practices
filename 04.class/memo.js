@@ -17,11 +17,15 @@ async function exists(filePath) {
 async function fileWriter(lines) {
   try {
     if (!(await exists(filePath))) {
-      await fs.writeFile(filePath, "[]");
+      await fs.writeFile(filePath, "{}");
     }
     const file = await fs.readFile(filePath, { encoding: "utf8" });
     const memos = JSON.parse(file);
-    memos.push(lines);
+
+    let ids = Object.keys(memos).map((x) => parseInt(x));
+    let id = ids.length ? (Math.max(...ids) + 1) : 1;
+    memos[id] = lines
+
     const data = JSON.stringify(memos);
     await fs.writeFile(filePath, data);
   } catch (err) {
