@@ -23,8 +23,8 @@ async function fileWriter(lines) {
     const memos = JSON.parse(file);
 
     let ids = Object.keys(memos).map((x) => parseInt(x));
-    let id = ids.length ? (Math.max(...ids) + 1) : 1;
-    memos[id] = lines
+    let id = ids.length ? Math.max(...ids) + 1 : 1;
+    memos[id] = lines;
 
     const data = JSON.stringify(memos);
     await fs.writeFile(filePath, data);
@@ -70,7 +70,7 @@ async function selectMemos() {
 
     const question = {
       type: "select",
-      name: "memo",
+      name: "memoId",
       message: "Choose a note you want to see:",
       choices: [],
       result() {
@@ -78,12 +78,14 @@ async function selectMemos() {
       },
     };
 
-    for (const memo of memos) {
-      const obj = { name: memo[0], message: memo[0], value: memo };
+    for (const id in memos) {
+      const obj = { name: memos[id][0], message: memos[id][0], value: id };
       question.choices.push(obj);
     }
-    let answers = await prompt(question);
-    for (const line of answers.memo) {
+    let answer = await prompt(question);
+    const id = answer.memoId;
+    const memo = memos[id];
+    for (const line of memo) {
       console.log(line);
     }
   } catch (err) {
