@@ -5,7 +5,7 @@ const FileController = require("./file-controller");
 const filePath = "./memos.json";
 
 class MemoController {
-  async add() {
+  static async add() {
     try {
       process.stdin.setEncoding("utf8");
       const lines = [];
@@ -32,7 +32,7 @@ class MemoController {
     }
   }
 
-  async list() {
+  static async list() {
     try {
       const fileController = new FileController(filePath);
       const memos = await fileController.read();
@@ -44,7 +44,7 @@ class MemoController {
     }
   }
 
-  async select() {
+  static async select() {
     try {
       const fileController = new FileController(filePath);
       const memos = await fileController.read();
@@ -69,7 +69,7 @@ class MemoController {
     }
   }
 
-  async delete() {
+  static async delete() {
     try {
       const fileController = new FileController(filePath);
       const memos = await fileController.read();
@@ -93,7 +93,7 @@ class MemoController {
     }
   }
 
-  async #getAnswer(memos, question) {
+  static async #getAnswer(memos, question) {
     try {
       for (const id in memos) {
         const obj = { name: memos[id][0], message: memos[id][0], value: id };

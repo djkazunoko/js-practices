@@ -10,13 +10,13 @@ class App {
 
   exec() {
     if (this.argv.l) {
-      new MemoController().list();
+      MemoController.list();
     } else if (this.argv.r) {
-      new MemoController().select();
+      MemoController.select();
     } else if (this.argv.d) {
-      new MemoController().delete();
+      MemoController.delete();
     } else {
-      new MemoController().add();
+      MemoController.add();
     }
   }
 }
