@@ -19,13 +19,14 @@ class MemoController {
 
       await once(rl, "close");
 
-      const memos = await new FileController(filePath).read();
+      const fileController = new FileController(filePath);
+      const memos = await fileController.read();
 
       let ids = Object.keys(memos).map((x) => parseInt(x));
       let id = ids.length ? Math.max(...ids) + 1 : 1;
       memos[id] = lines;
 
-      new FileController(filePath).write(memos);
+      await fileController.write(memos);
     } catch (err) {
       console.log(err);
     }
@@ -33,7 +34,8 @@ class MemoController {
 
   async list() {
     try {
-      const memos = await new FileController(filePath).read();
+      const fileController = new FileController(filePath);
+      const memos = await fileController.read();
       for (const id in memos) {
         console.log(memos[id][0]);
       }
@@ -44,7 +46,8 @@ class MemoController {
 
   async select() {
     try {
-      const memos = await new FileController(filePath).read();
+      const fileController = new FileController(filePath);
+      const memos = await fileController.read();
 
       const question = {
         type: "select",
@@ -68,7 +71,8 @@ class MemoController {
 
   async delete() {
     try {
-      const memos = await new FileController(filePath).read();
+      const fileController = new FileController(filePath);
+      const memos = await fileController.read();
 
       const question = {
         type: "select",
@@ -82,7 +86,7 @@ class MemoController {
 
       let answer = await this.#getAnswer(memos, question);
       delete memos[answer.memoId];
-      await new FileController(filePath).write(memos);
+      await fileController.write(memos);
       console.log("Successfully deleted !!");
     } catch (err) {
       console.log(err);
