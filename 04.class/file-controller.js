@@ -7,7 +7,7 @@ class FileController {
 
   async read() {
     try {
-      if (!(await this.#exists())) {
+      if (!(await this.#exists(this.filePath))) {
         await fs.writeFile(this.filePath, "{}");
       }
       const json = await fs.readFile(this.filePath, { encoding: "utf8" });
@@ -26,9 +26,9 @@ class FileController {
     }
   }
 
-  async #exists() {
+  async #exists(filePath) {
     try {
-      await fs.access(this.filePath);
+      await fs.access(filePath);
       return true;
     } catch {
       return false;
