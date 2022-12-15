@@ -39,7 +39,7 @@ class MemoController {
       if (!Object.keys(memos).length) {
         throw new Error("Please create at least one note.");
       }
-      
+
       for (const id in memos) {
         console.log(memos[id][0]);
       }
