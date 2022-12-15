@@ -36,6 +36,10 @@ class MemoController {
     try {
       const fileController = new FileController(filePath);
       const memos = await fileController.read();
+      if (!Object.keys(memos).length) {
+        throw new Error("Please create at least one note.");
+      }
+      
       for (const id in memos) {
         console.log(memos[id][0]);
       }
@@ -48,6 +52,9 @@ class MemoController {
     try {
       const fileController = new FileController(filePath);
       const memos = await fileController.read();
+      if (!Object.keys(memos).length) {
+        throw new Error("Please create at least one note.");
+      }
 
       const question = {
         type: "select",
@@ -73,6 +80,9 @@ class MemoController {
     try {
       const fileController = new FileController(filePath);
       const memos = await fileController.read();
+      if (!Object.keys(memos).length) {
+        throw new Error("Please create at least one note.");
+      }
 
       const question = {
         type: "select",
