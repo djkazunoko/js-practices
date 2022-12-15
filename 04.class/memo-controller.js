@@ -28,7 +28,7 @@ class MemoController {
 
       await fileController.write(memos);
     } catch (err) {
-      console.log(err);
+      console.log(err.message);
     }
   }
 
@@ -44,7 +44,7 @@ class MemoController {
         console.log(memos[id][0]);
       }
     } catch (err) {
-      console.log(err);
+      console.log(err.message);
     }
   }
 
@@ -72,7 +72,7 @@ class MemoController {
         console.log(line);
       }
     } catch (err) {
-      console.log(err);
+      console.log(err.message);
     }
   }
 
@@ -99,7 +99,7 @@ class MemoController {
       await fileController.write(memos);
       console.log("Successfully deleted !!");
     } catch (err) {
-      console.log(err);
+      console.log(err.message);
     }
   }
 
@@ -111,7 +111,7 @@ class MemoController {
       }
       return await prompt(question);
     } catch (err) {
-      console.log(err);
+      console.log(err.message);
     }
   }
 }

@@ -13,7 +13,7 @@ class FileController {
       const json = await fs.readFile(this.filePath, { encoding: "utf8" });
       return JSON.parse(json);
     } catch (err) {
-      console.log(err);
+      console.log(err.message);
     }
   }
 
@@ -22,7 +22,7 @@ class FileController {
       const json = JSON.stringify(obj);
       await fs.writeFile(this.filePath, json);
     } catch (err) {
-      console.log(err);
+      console.log(err.message);
     }
   }
 
