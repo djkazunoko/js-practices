@@ -9,14 +9,20 @@ class App {
   }
 
   exec() {
-    if (this.argv.l) {
-      MemoController.list();
-    } else if (this.argv.r) {
-      MemoController.select();
-    } else if (this.argv.d) {
-      MemoController.delete();
-    } else {
-      MemoController.add();
+    try {
+      if (Object.keys(this.argv).length >= 3) {
+        throw new Error("Only one option is available.");
+      } else if (this.argv.l) {
+        MemoController.list();
+      } else if (this.argv.r) {
+        MemoController.select();
+      } else if (this.argv.d) {
+        MemoController.delete();
+      } else {
+        MemoController.add();
+      }
+    } catch (err) {
+      console.log(err.message);
     }
   }
 }
