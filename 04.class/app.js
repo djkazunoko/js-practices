@@ -12,6 +12,8 @@ class App {
     try {
       if (Object.keys(this.argv).length >= 3) {
         throw new Error("Only one option is available.");
+      } else if (Object.keys(this.argv).some(this.#isNotOption)) {
+        throw new Error("Only options -r, -l and -d are available.");
       } else if (this.argv.l) {
         MemoController.list();
       } else if (this.argv.r) {
@@ -24,6 +26,10 @@ class App {
     } catch (err) {
       console.log(err.message);
     }
+  }
+
+  #isNotOption(value) {
+    return value != "l" && value != "r" && value != "d" && value != "_";
   }
 }
 
