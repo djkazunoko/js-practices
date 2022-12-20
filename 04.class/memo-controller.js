@@ -22,8 +22,8 @@ class MemoController {
       const fileController = new FileController(filePath);
       const memos = await fileController.read();
 
-      let ids = Object.keys(memos).map((x) => parseInt(x));
-      let id = ids.length ? Math.max(...ids) + 1 : 1;
+      const ids = Object.keys(memos).map((x) => parseInt(x));
+      const id = ids.length ? Math.max(...ids) + 1 : 1;
       memos[id] = lines;
 
       await fileController.write(memos);
@@ -66,7 +66,7 @@ class MemoController {
         },
       };
 
-      let answer = await this.#getAnswer(memos, question);
+      const answer = await this.#getAnswer(memos, question);
       const memo = memos[answer.memoId];
       for (const line of memo) {
         console.log(line);
@@ -94,7 +94,7 @@ class MemoController {
         },
       };
 
-      let answer = await this.#getAnswer(memos, question);
+      const answer = await this.#getAnswer(memos, question);
       delete memos[answer.memoId];
       await fileController.write(memos);
       console.log("Successfully deleted !!");
