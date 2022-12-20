@@ -23,7 +23,7 @@ class MemoController {
       const memos = await fileController.read();
 
       const ids = Object.keys(memos).map((x) => parseInt(x));
-      const id = ids.length ? Math.max(...ids) + 1 : 1;
+      const id = ids.length > 0 ? Math.max(...ids) + 1 : 1;
       memos[id] = lines;
 
       await fileController.write(memos);
