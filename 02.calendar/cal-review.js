@@ -13,7 +13,7 @@ console.log(`      ${month}月 ${year}`);
 console.log("日 月 火 水 木 金 土");
 
 for (let date = 1; date <= last_date; date++) {
-  process.stdout.write(`${date}`);
+  process.stdout.write(`${date.toString().padStart(2)} `);
   if ((date + first_day) % 7 === 0) {
     console.log();
   }
