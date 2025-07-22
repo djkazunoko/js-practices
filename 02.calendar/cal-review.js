@@ -11,6 +11,7 @@ let first_day = new Date(year, month - 1, 1).getDay();
 
 console.log(`      ${month}月 ${year}`);
 console.log("日 月 火 水 木 金 土");
+process.stdout.write("   ".repeat(first_day));
 
 for (let date = 1; date <= last_date; date++) {
   process.stdout.write(`${date.toString().padStart(2)} `);
